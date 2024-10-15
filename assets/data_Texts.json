@@ -1,0 +1,36 @@
+{
+    "titles":
+    [
+        "velocimetro",
+        "speedometer"
+    ],
+    "metrics":
+    [
+        "km/h",
+        "mi/h"
+    ],
+    "buttons":
+    [
+        [
+            "adicionar km",
+            "adicionar servico"
+        ],
+        [
+            "add miles",
+            "add service"
+        ]
+    ],
+    "services":
+    [
+        [
+            "abastecer",
+            "trocar o oleo",
+            "completar o oleo"
+        ],
+        [
+            "to fuel",
+            "to change oil",
+            "to fill the oil"
+        ]
+    ]
+}
