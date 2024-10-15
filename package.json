@@ -1,11 +1,12 @@
 {
   "name": "aros_hcf150",
-  "main": "expo-router/entry",
+  "main": "src/js/index.js",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
+    "dev": "expo start --web",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
