@@ -1,10 +1,10 @@
 import { StyleSheet, View , Text } from "react-native";
 
-export default function Velocimetro()
+export default function Hodometro()
 {
     return(
         <View style={styles.borda}>
-            <View style={styles.velocimetro}>
+            <View style={styles.odometro}>
                 <Text style={[styles.kms, styles.texts]}>8</Text>
                 <Text style={[styles.kms, styles.texts]}>8</Text>
                 <Text style={[styles.kms, styles.texts]}>8</Text>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create(
             marginHorizontal: 20,
             elevation: 3,
         },
-        velocimetro:{
+        odometro:{
             flexDirection: 'row',
             marginTop: 50,
             paddingTop: 10,
