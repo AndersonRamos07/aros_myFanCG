@@ -3,12 +3,13 @@ import { Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } fro
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import Velocimetro from './velocimetro';
+import Hodometro from './odometer';
 import Modal from './modal';
 
 import data from '../../assets/data_Texts.json';
 
 export default function App() {
+    const size = 50;
     const [lang, setLang] = useState(0);
     function toTranslate() {
         lang == 1? setLang(0): setLang(1);
@@ -17,6 +18,7 @@ export default function App() {
     const toCloseModal = () => {
         visible == true? setVisible(false) : setVisible(true)
     }
+    const [valorKM, setValorKM] = useState(0);
     return(
         <SafeAreaView style={styles.container}>
             <LinearGradient
@@ -30,16 +32,17 @@ export default function App() {
                                     textDecorationStyle:'double'}]}>
                             {data.titles[lang]}
                         </Text>
-                        <Velocimetro/>
+                        <Hodometro/>
                         <Text style={[styles.texts, {fontStyle: 'italic'}]}>
                             {data.metrics[lang]}
                         </Text>
                     </View>
                 </View>
-                <View style={[styles.icons, {flex: 2, marginTop: 125}]}>
-                    <MaterialCommunityIcons name="gas-station" size={75} color="#b8860b"/> 
-                    <MaterialCommunityIcons name="oil" size={75} color="#ff1500" />
-                    <MaterialCommunityIcons name="progress-alert" size={75} color="#15ff00" />
+                <View style={[styles.icons, {flex: 2, marginTop: 150}]}>
+                    <MaterialCommunityIcons name="gas-station" size={size} color="#b8860b" style={{paddingTop: 20}}/> 
+                    <MaterialCommunityIcons name="oil" size={size} color="#ff1500"/>
+                    <MaterialCommunityIcons name="progress-alert" size={size} color="#15ff00" />
+                    <MaterialCommunityIcons name="car-tire-alert" size={size} color="#00005f"  style={{paddingTop: 20}}/>
                 </View>
                 <View style={styles.buttons}>
                     <Pressable
@@ -65,7 +68,8 @@ export default function App() {
                     descricao={data.buttons[lang][lang]}
                     type={data.services[lang][lang]}
                     isVisible={visible}
-                    onClose={toCloseModal}>
+                    onClose={toCloseModal}
+                    hodometro={valorKM}>
                 </Modal>
                 <Pressable
                     onPress={toTranslate}>
