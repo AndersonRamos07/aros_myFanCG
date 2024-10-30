@@ -1,16 +1,20 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
-import { Modal, StyleSheet, View, Text, TextInput, Pressable } from "react-native";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, useState } from "react";
+import { Modal, StyleSheet, View, Text, TextInput, Pressable, TouchableHighlight } from "react-native";
+import Hodometro from "./odometer";
 
 export interface Titles{
     descricao: string,
     type: string,
     isVisible: boolean,
     hodometro: number,
+    onSetOdo: () => {},
     onClose: () => void,
 }
 
 export default function CustomModal(props: Titles){
+    const [odometro,setOdometro] = useState([])
+    const [text, setText] = useState('');
     return(
         <Modal
             animationType='slide'
@@ -37,28 +41,40 @@ export default function CustomModal(props: Titles){
                     </View>
                     <View
                     style={styles.content}>
-                        <TextInput
-                            style={styles.input}
-                            // placeholder={props.velocimetro}
-                            keyboardType="numeric">
-                        </TextInput>
-                        <Text>km</Text>
+                        <Hodometro
+                        kmOdometer={text}
+                        wBorder={false}/>
+                        <>
+                            <TextInput
+                                onChangeText={newText => setText(newText)}
+                                defaultValue={text}
+                                keyboardType="numeric"
+                                style={{fontSize: 30}}
+                            >
+                            {text
+                                .split('')
+                                .map(word => odometro)}
+                            </TextInput>
+                            <Text>km</Text>
+                        </>
                         <View
                             style={styles.buttonsArea}>
-                            <Pressable
-                            style={styles.button}>
+                            <TouchableHighlight
+                            style={styles.button}
+                            onPress={props.onSetOdo}>
                                 <Text
                                 style={styles.titleBtn}>
-                                    Adicionar
+                                    Atualizar
                                 </Text>
-                            </Pressable>
-                            <Pressable
-                            style={styles.button}>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                            style={styles.button}
+                            onPress={eAe}>
                                 <Text
                                 style={styles.titleBtn}>
                                     Cancelar
                                 </Text>
-                            </Pressable>
+                            </TouchableHighlight>
                         </View>
                     </View>
                 </View>
@@ -66,16 +82,21 @@ export default function CustomModal(props: Titles){
     )
 }
 
+const eAe = () => alert('Deseja cancelar?')
+
 const styles = StyleSheet.create({
     button:{
-        borderRadius: 15,
+        borderRadius: 30,
         backgroundColor: 'blue',
         padding: 5,
+        height: 50,
+        width: 90,
         elevation: 5
     },
     buttonsArea:{
         width: '100%',
         paddingHorizontal: 20,
+        marginTop: 30,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -88,11 +109,12 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
         width: '100%',
-        height: '75%',
+        height: '65%',
         position: 'absolute',
     },
     content:{
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     modal:{
         elevation: 5,
@@ -106,12 +128,11 @@ const styles = StyleSheet.create({
     input:{
         color: 'blue',
         fontSize: 30,
-        // borderColor: 'black',
-        // borderBottomColor: 'gray',
-        elevation: 3,
+        elevation: 2,
         textAlign: 'right',
-        width: '80%',
+        width: 250,
         height: 70,
+        borderRadius: 2.5,
     },
     title:{
         backgroundColor: '#2f2f2f',
@@ -125,6 +146,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     titleBtn:{
-        color: '#cfcfcf'
+        color: '#cfcfcf',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingTop: 7,
     }
 })
