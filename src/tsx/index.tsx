@@ -1,15 +1,24 @@
-import { useState } from 'react';
-import { Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { createContext, useState } from 'react';
+import {
+    Pressable,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
+import Dashboard from './dashboard';
 import Hodometro from './odometer';
 import Modal from './modal';
 
 import data from '../../assets/data_Texts.json';
 
+const OdometerContext = createContext([0,0,0,0,0,0]);
+
 export default function App() {
-    const size = 50;
     const [lang, setLang] = useState(0);
     function toTranslate() {
         lang == 1? setLang(0): setLang(1);
@@ -18,7 +27,8 @@ export default function App() {
     const toCloseModal = () => {
         visible == true? setVisible(false) : setVisible(true)
     }
-    const [valorKM, setValorKM] = useState(0);
+    const [odometerKm, setOdometerKM] = useState([0,0,0,0,0,0]);
+    
     return(
         <SafeAreaView style={styles.container}>
             <LinearGradient
@@ -32,18 +42,17 @@ export default function App() {
                                     textDecorationStyle:'double'}]}>
                             {data.titles[lang]}
                         </Text>
-                        <Hodometro/>
-                        <Text style={[styles.texts, {fontStyle: 'italic'}]}>
-                            {data.metrics[lang]}
-                        </Text>
+                        <OdometerContext.Provider value={odometerKm}>
+                            <Hodometro
+                            kmOdometer={odometerKm}
+                            wBorder={true}/>
+                            <Text style={[styles.texts, {fontStyle: 'italic'}]}>
+                                {data.metrics[lang]}
+                            </Text>
+                        </OdometerContext.Provider>
                     </View>
                 </View>
-                <View style={[styles.icons, {flex: 2, marginTop: 150}]}>
-                    <MaterialCommunityIcons name="gas-station" size={size} color="#b8860b" style={{paddingTop: 20}}/> 
-                    <MaterialCommunityIcons name="oil" size={size} color="#ff1500"/>
-                    <MaterialCommunityIcons name="progress-alert" size={size} color="#15ff00" />
-                    <MaterialCommunityIcons name="car-tire-alert" size={size} color="#00005f"  style={{paddingTop: 20}}/>
-                </View>
+                <Dashboard/>
                 <View style={styles.buttons}>
                     <Pressable
                     onPress={toCloseModal}
@@ -69,7 +78,8 @@ export default function App() {
                     type={data.services[lang][lang]}
                     isVisible={visible}
                     onClose={toCloseModal}
-                    hodometro={valorKM}>
+                    kmOdometer={(odometerKM) => setOdometerKM(odometerKM)}
+                    hodometro={odometerKm}>
                 </Modal>
                 <Pressable
                     onPress={toTranslate}>
@@ -107,11 +117,6 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-    },
-    icons:{
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingTop: 50
     },
     lastsServices:{
         flex:3,
