@@ -10,12 +10,17 @@ import data from '../../assets/data_Texts.json';
 
 export default function App() {
     const [lang, setLang] = useState(0);
-    function toTranslate() {
+    const toTranslate = () => {
         lang == 1? setLang(0): setLang(1);
     }
     const [visible, setVisible] = useState(true);
     const toCloseModal = () => {
         visible == true? setVisible(false) : setVisible(true)
+    }
+    
+    const [actived, setActived] = useState(false);
+    const toActive = () => {
+        actived == false? setActived(true) : setActived(false)
     }
     return(
         <SafeAreaView style={styles.container}>
@@ -37,9 +42,9 @@ export default function App() {
                     </View>
                 </View>
                 <View style={[styles.icons, {flex: 2, marginTop: 125}]}>
-                    <MaterialCommunityIcons name="gas-station" size={75} color="#b8860b"/> 
-                    <MaterialCommunityIcons name="oil" size={75} color="#ff1500" />
-                    <MaterialCommunityIcons name="progress-alert" size={75} color="#15ff00" />
+                    <MaterialCommunityIcons name="gas-station" size={75} color={actived?"#b8860b":'#cfcfcf'}/> 
+                    <MaterialCommunityIcons name="oil" size={75} color={actived?"#ff1500":'#cfcfcf'} />
+                    <MaterialCommunityIcons name="progress-alert" size={75} color={actived?"#15ff00":'#cfcfcf'} />
                 </View>
                 <View style={styles.buttons}>
                     <Pressable
@@ -74,6 +79,10 @@ export default function App() {
                     size={25}
                     color="#cfcfcf"
                     style={{marginBottom: 10, marginLeft: 10}}/>
+                </Pressable>
+                <Pressable
+                onPress={toActive}>
+                    <Text>TESTE</Text>
                 </Pressable>
             </LinearGradient>
         </SafeAreaView>
