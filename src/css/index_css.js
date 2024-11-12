@@ -1,16 +1,18 @@
 import { StyleSheet } from 'react-native';
 
+export const colorMain = '#cfcfcf';
+
 export default styles = StyleSheet.create({
     button:{
         backgroundColor: '#000',
         borderRadius: 50,
         borderWidth: 2,
-        borderColor: '#cfcfcf',
+        borderColor: colorMain,
         paddingHorizontal: 20,
         elevation: 3,
     },
     buttonText:{
-        color: '#cfcfcf',
+        color: colorMain,
     },
     buttons: {
         flexDirection: 'row',
@@ -26,7 +28,7 @@ export default styles = StyleSheet.create({
         flex:3,
         marginTop: 30,
         margin: 20,
-        borderColor: '#cfcfcf',
+        borderColor: colorMain,
         borderWidth: 2,
         borderRadius: 50,
         backgroundColor: 'black',
@@ -39,12 +41,18 @@ export default styles = StyleSheet.create({
     },
     titulo:{
         textAlign:'center',
-        marginTop: 50,
-        paddingTop: 30,
+        marginTop: 30,
+        paddingTop: 10,
         fontSize: 20,
-        color: '#cfcfcf',
+        color: colorMain,
         fontWeight: 'bold'
-    }
+    },
+    mainTitle:{
+        fontStyle: 'italic',
+        textTransform: 'uppercase',
+        textDecorationLine: 'underline',
+        textDecorationStyle:'double'
+    },
 })
 
 // gauge

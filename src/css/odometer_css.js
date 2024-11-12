@@ -15,7 +15,7 @@ export default styles = StyleSheet.create(
         odometro:{
             flexDirection: 'row',
             marginTop: 50,
-            paddingTop: 10,
+            paddingTop: 15,
             paddingBottom: 20,
             justifyContent: 'center',
             elevation: 5,
@@ -30,7 +30,7 @@ export default styles = StyleSheet.create(
             textAlign: 'center',
             fontSize: 30,
             fontWeight: 'bold',
-            padding: 10
+            padding: 7.5,
         }
     }
 )
