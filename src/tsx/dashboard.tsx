@@ -1,48 +1,85 @@
-import { Children, useState } from "react";
+import { Children, ComponentElement, useState } from "react";
 import { StyleSheet, View } from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons
+    from '@expo/vector-icons/MaterialCommunityIcons';
+import Light from "./light";
 
-// export default function Dashboard (Children: any)
 export default function Dashboard (Children: any)
 {
-    const [actived, setActived] = useState('default')
+    const colorDefault = '#fcfcfc'
+    const [gasLight, setGasLight] = useState(colorDefault)
+        const lightGas = () => gasLight != colorDefault?
+            setGasLight(colorDefault):
+            setGasLight('#b8860b')
+    const [oilLight, setOilLight] = useState(colorDefault)
+        const lightOil = () => oilLight != colorDefault?
+            setOilLight(colorDefault):
+            setOilLight('#ff1500')
+    const [progressLight, setProgressLight] = useState(colorDefault)
+        const lightProgress = () => progressLight != colorDefault?
+            setProgressLight(colorDefault):
+            setProgressLight('#15ff00')
+    const [carTireLight, setCarTireLight] = useState(colorDefault)
+        const lightCarTire = () => carTireLight != colorDefault?
+            setCarTireLight(colorDefault):
+            setCarTireLight('#00005f')
+    const [alertLight, setAlertLight] = useState(colorDefault)
+        const lightAlert = () => alertLight != colorDefault?
+            setAlertLight(colorDefault):
+            setAlertLight('#ff0015')
     const size = 50;
-    const colors = {
-        default: '#fcfcfc',
-        gas: '#b8860b',
-        oil: '#ff1500',
-        progress: '#15ff00',
-        tire: '#00005f',
-        alert: '#ff0015'
-    }
+
     return(
         <>
- {/* odometer   {Children} */}
-            <View style={[styles.icons, {flex: 2, marginTop: 175}]}>
-                <MaterialCommunityIcons name="gas-station" size={size} color={colors.default} style={{paddingTop: 30}}/> 
-                <MaterialCommunityIcons name="oil" size={size} color={colors.default}/>
             <View
-            style={{
-                // borderColor: '#fff',
-                // borderWidth: 1,
-                marginHorizontal: 10,
-                position: 'absolute',
-                alignItems: 'center',
-                width: 320,
-                opacity: .07,
-                marginLeft: 0,
-                marginTop: 65}}>
-                <MaterialCommunityIcons 
+                style={
+                    [
+                        styles.icons,
+                        {
+                            flex: 2,
+                            marginTop: 175
+                        }
+                    ]
+                }>
+                    <Light
+                        color={gasLight}
+                        name='gas-station'
+                        size={size}
+                        onClick={lightGas}
+                        type='below'
+                    />
+                    <Light
+                        color={oilLight}
+                        name='oil'
+                        size={size}
+                        onClick={lightOil}
+                        type='over'
+                    />
+            <View
+                style={styles.above}>
+                <MaterialCommunityIcons
                     name="alert"
                     // "alert-circle-outline"
                     size={size - 5}
-                    color={colors.default}
+                    color={alertLight}
                     style={{
                         zIndex: 2
-                        }}/>
+                    }}/>
             </View>
-                <MaterialCommunityIcons name="progress-alert" size={size} color={colors.default} />
-                <MaterialCommunityIcons name="car-tire-alert" size={size} color={colors.default}  style={{paddingTop: 30}}/>
+                    <Light
+                        color={progressLight}
+                        name='progress-alert'
+                        size={size}
+                        onClick={lightProgress}
+                        type='over'
+                    />
+                    <Light
+                        color={carTireLight}
+                        name='car-tire-alert'
+                        size={size}
+                        onClick={lightCarTire}
+                        type='below'
+                    />
             </View>
         </>
     )
@@ -50,19 +87,30 @@ export default function Dashboard (Children: any)
 
 const styles = StyleSheet.create(
     {
+        above:{
+            // borderColor: '#fff',
+            // borderWidth: 5,
+            marginHorizontal: 10,
+            position: 'absolute',
+            alignItems: 'center',
+            width: 325,
+            opacity: .07,
+            marginLeft: -10,
+            marginTop: 65
+        },
         icons:{
             marginHorizontal: 10,
             marginBottom: 20,
             flexDirection: 'row',
             justifyContent: 'space-around',
             paddingVertical: 15,
-            paddingBottom: 10,
+            paddingBottom: 30,
             elevation: 5,
             borderBottomRightRadius: 30,
             borderBottomLeftRadius: 30,
             borderTopLeftRadius: 70,
             borderTopRightRadius: 70,
-            opacity: .9
+            opacity: .7
         },
     }
 )
