@@ -1,22 +1,6 @@
-import { StyleSheet, View , Text } from "react-native";
+import { StyleSheet } from 'react-native';
 
-export default function Velocimetro()
-{
-    return(
-        <View style={styles.borda}>
-            <View style={styles.velocimetro}>
-                <Text style={[styles.kms, styles.texts]}>8</Text>
-                <Text style={[styles.kms, styles.texts]}>8</Text>
-                <Text style={[styles.kms, styles.texts]}>8</Text>
-                <Text style={[styles.kms, styles.texts]}>8</Text>
-                <Text style={[styles.kms, styles.texts]}>8</Text>
-                <Text style={[{backgroundColor: 'white'}, styles.texts]}>8</Text>
-            </View>
-        </View>
-    )
-}
-
-const styles = StyleSheet.create(
+export default styles = StyleSheet.create(
     {
         borda:{
             borderTopLeftRadius: 175,
@@ -28,7 +12,7 @@ const styles = StyleSheet.create(
             marginHorizontal: 20,
             elevation: 3,
         },
-        velocimetro:{
+        odometro:{
             flexDirection: 'row',
             marginTop: 50,
             paddingTop: 10,

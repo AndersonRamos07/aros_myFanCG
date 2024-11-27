@@ -1,12 +1,22 @@
-import { useState } from 'react';
-import { Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { createContext, useState } from 'react';
+import {
+    Pressable,
+    SafeAreaView,
+    Text,
+    View
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-import Velocimetro from './velocimetro';
+import styles from '../css/index_css';
+import data from '../../assets/data_Texts.json';
+
+import Dashboard from './dashboard';
+import Hodometro from './odometer';
 import Modal from './modal';
 
-import data from '../../assets/data_Texts.json';
+
+const OdometerContext = createContext([0,0,0,0,0,0]);
 
 export default function App() {
     const [lang, setLang] = useState(0);
@@ -17,11 +27,16 @@ export default function App() {
     const toCloseModal = () => {
         visible == true? setVisible(false) : setVisible(true)
     }
+<<<<<<< HEAD
     
     const [actived, setActived] = useState(false);
     const toActive = () => {
         actived == false? setActived(true) : setActived(false)
     }
+=======
+    const [odometerKm, setOdometerKM] = useState([0,0,0,0,0,0]);
+    
+>>>>>>> 7b3035de0e264637563d2312f1e5a66e071705f0
     return(
         <SafeAreaView style={styles.container}>
             <LinearGradient
@@ -35,17 +50,25 @@ export default function App() {
                                     textDecorationStyle:'double'}]}>
                             {data.titles[lang]}
                         </Text>
-                        <Velocimetro/>
-                        <Text style={[styles.texts, {fontStyle: 'italic'}]}>
-                            {data.metrics[lang]}
-                        </Text>
+                        <OdometerContext.Provider value={odometerKm}>
+                            <Hodometro
+                            kmOdometer={odometerKm}
+                            wBorder={true}/>
+                            <Text style={[styles.texts, {fontStyle: 'italic', marginBottom: 10}]}>
+                                {data.metrics[lang]}
+                            </Text>
+                        </OdometerContext.Provider>
                     </View>
                 </View>
+<<<<<<< HEAD
                 <View style={[styles.icons, {flex: 2, marginTop: 125}]}>
                     <MaterialCommunityIcons name="gas-station" size={75} color={actived?"#b8860b":'#cfcfcf'}/> 
                     <MaterialCommunityIcons name="oil" size={75} color={actived?"#ff1500":'#cfcfcf'} />
                     <MaterialCommunityIcons name="progress-alert" size={75} color={actived?"#15ff00":'#cfcfcf'} />
                 </View>
+=======
+                <Dashboard/>
+>>>>>>> 7b3035de0e264637563d2312f1e5a66e071705f0
                 <View style={styles.buttons}>
                     <Pressable
                     onPress={toCloseModal}
@@ -70,7 +93,9 @@ export default function App() {
                     descricao={data.buttons[lang][lang]}
                     type={data.services[lang][lang]}
                     isVisible={visible}
-                    onClose={toCloseModal}>
+                    onClose={toCloseModal}
+                    kmOdometer={(odometerKM) => setOdometerKM(odometerKM)}
+                    hodometro={odometerKm}>
                 </Modal>
                 <Pressable
                     onPress={toTranslate}>
@@ -90,61 +115,3 @@ export default function App() {
 }
 
 function alerta(){alert("foi clickado!")};
-
-const styles = StyleSheet.create({
-    button:{
-        backgroundColor: '#000',
-        borderRadius: 50,
-        borderWidth: 2,
-        borderColor: '#cfcfcf',
-        paddingHorizontal: 20,
-        elevation: 3,
-    },
-    buttonText:{
-        color: '#cfcfcf',
-    },
-    buttons: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    container: {
-        backgroundColor: '#212121',
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-    },
-    icons:{
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingTop: 50
-    },
-    lastsServices:{
-        flex:3,
-        marginTop: 30,
-        margin: 20,
-        borderColor: '#cfcfcf',
-        borderWidth: 2,
-        borderRadius: 50,
-        backgroundColor: 'black',
-        elevation: 5,
-    },
-    texts:{
-        color: '#f5f5f5',
-        alignSelf: 'center',
-        justifyContent: 'center'
-    },
-    titulo:{
-        textAlign:'center',
-        marginTop: 50,
-        paddingTop: 30,
-        fontSize: 20,
-        color: '#cfcfcf',
-        fontWeight: 'bold'
-    }
-})
-
-                    // gauge
-                    // plus-thick
-                    // speedometer
-                    // tools
-                    // wrench

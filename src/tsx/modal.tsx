@@ -1,15 +1,22 @@
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
-import { Modal, StyleSheet, View, Text, TextInput, Pressable } from "react-native";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, useState } from "react";
+import { Modal, View, Text, TextInput, Pressable, TouchableHighlight } from "react-native";
+import Hodometro from "./odometer";
+
+import styles from '../css/modal_css';
 
 export interface Titles{
     descricao: string,
     type: string,
     isVisible: boolean,
+    hodometro: number,
+    onSetOdo: () => {},
     onClose: () => void,
 }
 
 export default function CustomModal(props: Titles){
+    const [odometro,setOdometro] = useState([])
+    const [text, setText] = useState('');
     return(
         <Modal
             animationType='slide'
@@ -36,55 +43,45 @@ export default function CustomModal(props: Titles){
                     </View>
                     <View
                     style={styles.content}>
-                        <Text>
-                            Modal
-                        </Text>
+                        <Hodometro
+                        kmOdometer={text}
+                        wBorder={false}/>
+                        <>
+                            <TextInput
+                                onChangeText={newText => setText(newText)}
+                                defaultValue={text}
+                                keyboardType="numeric"
+                                style={{fontSize: 30}}
+                            >
+                            {text
+                                .split('')
+                                .map(word => odometro)}
+                            </TextInput>
+                            <Text>km</Text>
+                        </>
+                        <View
+                            style={styles.buttonsArea}>
+                            <TouchableHighlight
+                            style={styles.button}
+                            onPress={props.onSetOdo}>
+                                <Text
+                                style={styles.titleBtn}>
+                                    Atualizar
+                                </Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight
+                            style={styles.button}
+                            onPress={eAe}>
+                                <Text
+                                style={styles.titleBtn}>
+                                    Cancelar
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
                     </View>
                 </View>
         </Modal>
     )
 }
 
-const styles = StyleSheet.create({
-    container:{
-        alignItems: 'center',
-        bottom: 0,
-        backgroundColor: '#cfcfcf',
-        borderTopRightRadius: 10,
-        borderTopLeftRadius: 10,
-        // justifyContent: 'center',
-        width: '100%',
-        height: '75%',
-        position: 'absolute',
-    },
-    content:{
-        
-    },
-    modal:{
-        elevation: 5,
-        backgroundColor: 'blue',
-        // paddingHorizontal: 75,
-        // margin: 20,
-        // alignContent: 'center',
-        // justifyContent: 'center',
-        borderColor: '#cfcfcf',
-    },
-    input:{
-        color: 'blue',
-        fontSize: 30,
-        borderColor: 'black',
-        borderBottomColor: 'gray',
-        elevation: 3,
-    },
-    title:{
-        backgroundColor: '#005500',
-        height: '10%',
-        borderTopRightRadius: 10,
-        borderTopLeftRadius: 10,
-        width: '100%',
-        paddingHorizontal: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-})
+const eAe = () => alert('Deseja cancelar?')
