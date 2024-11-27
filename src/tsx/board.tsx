@@ -73,6 +73,7 @@ export default function Board(props: any)
 const styles = StyleSheet.create(
     {
         text:{
+            fontSize: 10,
             color:'#fcfcfc',
             marginLeft: 15,
             paddingHorizontal: 10,

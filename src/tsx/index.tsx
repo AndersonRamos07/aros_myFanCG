@@ -1,94 +1,109 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import {
-    Pressable,
     SafeAreaView,
     Text,
     View
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialCommunityIcons
+    from '@expo/vector-icons/MaterialCommunityIcons';
 
-import styles from '../css/index_css';
+import styles,
+    { colorMain } from '../css/index_css';
 import data from '../../assets/data_Texts.json';
 
+//region:c1 -   componentes externos
 import Dashboard from './dashboard';
-import Hodometro from './odometer';
 import Modal from './modal';
-
-
-const OdometerContext = createContext([0,0,0,0,0,0]);
+import Hodometro from './odometer';
+import CustomButton from './customButton';
+import Board from './board';
+//endregion:c1
 
 export default function App() {
+    const [ odometer , setOdometer ] = useState();
     const [lang, setLang] = useState(0);
     function toTranslate() {
         lang == 1? setLang(0): setLang(1);
     }
     const [visible, setVisible] = useState(true);
-    const toCloseModal = () => {
+    const toCloseModal = (res) => {
         visible == true? setVisible(false) : setVisible(true)
+        setOdometer(res)
     }
-    const [odometerKm, setOdometerKM] = useState([0,0,0,0,0,0]);
-    
+    const updateOdometer = r => toCloseModal(r)
+ 
     return(
         <SafeAreaView style={styles.container}>
             <LinearGradient
-                colors={['#000007','transparent']} style={{flex:1}}>                
-                <View style={{flex:3}}>
-                    <View>
-                        <Text style={[styles.titulo,
-                                {fontStyle: 'italic',
-                                    textTransform: 'uppercase',
-                                    textDecorationLine: 'underline',
-                                    textDecorationStyle:'double'}]}>
-                            {data.titles[lang]}
-                        </Text>
-                        <OdometerContext.Provider value={odometerKm}>
-                            <Hodometro
-                            kmOdometer={odometerKm}
-                            wBorder={true}/>
-                            <Text style={[styles.texts, {fontStyle: 'italic', marginBottom: 10}]}>
-                                {data.metrics[lang]}
+                colors={['#000007','transparent']}
+                style={{flex:1}}>
+                    <View style={{flex:3}}>
+                        <View>
+                            <Text style={
+                                [
+                                    styles.titulo,
+                                    styles.mainTitle
+                                ]}>
+                                {data.titles[lang]}
                             </Text>
-                        </OdometerContext.Provider>
+                                <Hodometro
+                                kmOdometer={odometer}
+                                wBorder={true}/>
+                                <Text style={
+                                        [
+                                            styles.texts,
+                                            {
+                                                fontStyle: 'italic',
+                                                marginBottom: 10
+                                            }
+                                        ]}>
+                                    {data.metrics[lang]}
+                                </Text>
+                        </View>
                     </View>
-                </View>
-                <Dashboard/>
-                <View style={styles.buttons}>
-                    <Pressable
-                    onPress={toCloseModal}
-                    style={styles.button}>
-                        <MaterialCommunityIcons name="speedometer" size={25} color="#cfcfcf"/>
-                        <MaterialCommunityIcons name="plus-thick" size={15} color="#cfcfcf"/>
-                    </Pressable>
-
-                    <Pressable
-                    onPress={toCloseModal}
-                    style={styles.button}>
-                        <MaterialCommunityIcons name="tools" size={25} color="#cfcfcf"/>
-                        <MaterialCommunityIcons name="plus-thick" size={15} color="#cfcfcf"/>
-                    </Pressable>
-                </View>
-                <View style={styles.lastsServices}>
-                    <Text style={styles.texts}>
-                        Alertas: ultimos servicos
-                    </Text>
-                </View>
-                <Modal
-                    descricao={data.buttons[lang][lang]}
-                    type={data.services[lang][lang]}
-                    isVisible={visible}
-                    onClose={toCloseModal}
-                    kmOdometer={(odometerKM) => setOdometerKM(odometerKM)}
-                    hodometro={odometerKm}>
-                </Modal>
-                <Pressable
-                    onPress={toTranslate}>
-                <MaterialCommunityIcons
-                    name="translate"
-                    size={25}
-                    color="#cfcfcf"
-                    style={{marginBottom: 10, marginLeft: 10}}/>
-                </Pressable>
+                    <Dashboard/>
+                    <View style={styles.buttons}>
+                        <CustomButton
+                            onClose={toCloseModal}
+                            mainIcon='speedometer'
+                            icon='plus-thick'
+                            mainSize={25}
+                            size={15}
+                        />
+                        <CustomButton
+                            onClose={toCloseModal}
+                            mainIcon='tools'
+                            icon='plus-thick'
+                            mainSize={25}
+                            size={15}
+                        />
+                    </View>
+                    <View
+                        style={styles.lastsServices}>
+                        <Text
+                            style={styles.texts}>
+                        <MaterialCommunityIcons
+                            name="alert"
+                            size={15}
+                            color={colorMain}
+                        />
+                            Alertas: ultimos servicos
+                        </Text>
+                        <Board
+                        km={250}
+                        newKm={300}
+                        color='#fcfcfc'
+                        />
+                    </View>
+                    <Modal
+                        handleOdometer={updateOdometer}
+                        descricao={data.buttons[lang][lang]}
+                        type={data.services[lang][lang]}
+                        isVisible={visible}
+                        onClose={toCloseModal}
+                        hodometro={odometer}>
+                    </Modal>
             </LinearGradient>
         </SafeAreaView>
     )
