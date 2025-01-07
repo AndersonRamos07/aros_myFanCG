@@ -35,7 +35,7 @@ export default function Dashboard (Children: any)
                 style={
                     [
                         styles.icons,
-                        {
+                        {            
                             flex: 2,
                             marginTop: 175
                         }
@@ -90,21 +90,19 @@ const styles = StyleSheet.create(
         above:{
             // borderColor: '#fff',
             // borderWidth: 5,
-            marginHorizontal: 10,
-            position: 'absolute',
+            marginHorizontal: -45,
             alignItems: 'center',
-            width: 325,
+            width: '100vw',
             opacity: .07,
-            marginLeft: -10,
-            marginTop: 65
+            marginTop: 75
         },
         icons:{
             marginHorizontal: 10,
-            marginBottom: 20,
+            marginBottom: 30,
             flexDirection: 'row',
             justifyContent: 'space-around',
             paddingVertical: 15,
-            paddingBottom: 30,
+            paddingBottom: 20,
             elevation: 5,
             borderBottomRightRadius: 30,
             borderBottomLeftRadius: 30,

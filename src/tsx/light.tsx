@@ -1,5 +1,5 @@
 import { Pressable } from "react-native";
-import MaterialCommunityIcons
+import MCIcon
     from "@expo/vector-icons/MaterialCommunityIcons";
 
 export interface Details{
@@ -16,7 +16,7 @@ export default function Light(props:Details){
         onPress={props.onClick}
             style={props.type == 'below'?{paddingTop: 30}:{paddingTop: 5}}
         >
-            <MaterialCommunityIcons
+            <MCIcon
                 color={props.color}
                 name={props.name}
                 size={props.size}

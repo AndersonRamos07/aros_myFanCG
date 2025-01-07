@@ -6,7 +6,7 @@ import {
     View
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import MaterialCommunityIcons
+import MCIcon
     from '@expo/vector-icons/MaterialCommunityIcons';
 
 import styles,
@@ -15,11 +15,11 @@ import data from '../../assets/data_Texts.json';
 import km from '../../assets/data_km.json';
 
 //region:c1 -   componentes externos
-import Dashboard from './dashboard';
-import Modal from './modal';
-import Hodometro from './odometer';
-import CustomButton from './customButton';
 import Board from './board';
+import CustomButton from './customButton';
+import Dashboard from './dashboard';
+import Hodometro from './odometer';
+import Modal from './modal';
 //endregion:c1
 
 export default function App() {
@@ -43,7 +43,8 @@ export default function App() {
     const updateOdometer = r => toCloseModal(r)
 
     return(
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView
+            style={styles.container}>
             <LinearGradient
                 colors={['#000007','transparent']}
                 style={{flex:1}}>
@@ -88,7 +89,7 @@ export default function App() {
                         style={styles.lastsServices}>
                         <Text
                             style={[styles.texts , styles.alertTitle]}>
-                        <MaterialCommunityIcons
+                        <MCIcon
                             name="alert"
                             size={15}
                             color={colorMain}
