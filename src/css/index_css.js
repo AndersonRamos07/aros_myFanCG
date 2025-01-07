@@ -37,7 +37,11 @@ export default styles = StyleSheet.create({
     texts:{
         color: '#f5f5f5',
         alignSelf: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+    },
+    alertTitle:{
+        fontSize: 25,
+        paddingVertical: 10
     },
     titulo:{
         textAlign:'center',

@@ -29,9 +29,18 @@ export default styles = StyleSheet.create(
         height: '65%',
         position: 'absolute',
     },
+    containerButtons:{
+        display: 'flex',
+        flexDirection: 'row', 
+        justifyContent: 'space-between',
+        // borderColor: 'purple',
+        // borderWidth: 2,
+        width: 200
+    },
     content:{
         justifyContent: 'center',
         alignItems: 'center',
+        paddingBottom: 10,
     },
     modal:{
         elevation: 5,
